@@ -1,19 +1,16 @@
 fun main() {
-    val one = Wall.Post(1, "Hallo")
-    val two = Wall.Post(2, "hi")
-
     Wall.add(Wall.Post(1, "Nice"))
-    Wall.add(one)
-    Wall.add(two)
+    Wall.add(Wall.Post(2, "hi"))
+    Wall.add(Wall.Post(3, "Hallo"))
     Wall.printWall()
-
-    Wall.update(one)
+    Wall.update(Wall.Post(1, "Change"))
+    Wall.printWall()
 }
 
 object Wall {
     data class Post(
-        val ownerId: Int,
-        val cont: String
+        var ownerId: Int,
+        var cont: String
     )
 
     private var wall = emptyArray<Post>()
@@ -22,11 +19,12 @@ object Wall {
         wall += post
     }
 
-    fun update(post: Post) {
-        if (post in wall ){
-post=wall.set(2,"wow")
+    fun update(newPost: Post) {
+        for (post in wall) {
+            if (newPost.ownerId == post.ownerId) {
+                post.cont = newPost.cont
+            }
         }
-
     }
 
     fun printWall() {
@@ -35,4 +33,5 @@ post=wall.set(2,"wow")
         }
     }
 }
+
 
